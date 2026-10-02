@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Prediction History</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .history-table th {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .spam-text {
+            color: #b91c1c;
+            font-weight: bold;
+        }
+
+        .genuine-text {
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="badge">PREDICTION HISTORY</div>
+
+        <h1>Message History</h1>
+
+        <p class="subtitle">
+            Previously checked messages are shown below.
+        </p>
+
+
+        {% if records %}
+
+        <div style="overflow-x:auto;">
+
+            <table class="history-table">
+
+                <thead>
+                    <tr>
+                        <th>Message</th>
+                        <th>Result</th>
+                        <th>Confidence</th>
+                        <th>Date & Time</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for record in records %}
+
+                    <tr>
+
+                        <td>{{ record[0] }}</td>
+
+                        <td class="{% if record[1] == 'SPAM' %}spam-text{% else %}genuine-text{% endif %}">
+                            {{ record[1] }}
+                        </td>
+
+                        <td>{{ record[2] }}%</td>
+
+                        <td>{{ record[3] }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <p>No prediction history yet.</p>
+
+        {% endif %}
+
+
+        <a class="back-link" href="{{ url_for('home') }}">
+            ← Back to Detector
+        </a>
+
+
+    </div>
+
+</div>
+
+</body>
+</html>
