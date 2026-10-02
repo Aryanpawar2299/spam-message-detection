@@ -1,0 +1,70 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Spam Message Detection</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="badge">AI / ML PROJECT</div>
+
+        <h1>AI-Based Spam Message Detection</h1>
+
+        <p class="subtitle">
+            Enter a message and check whether it is Spam or Genuine.
+        </p>
+
+        <form method="POST" action="{{ url_for('predict') }}">
+
+            <textarea
+                name="message"
+                placeholder="Type your message here..."
+                required>{{ message }}</textarea>
+
+            <button type="submit">
+                🔍 Check Message
+            </button>
+
+        </form>
+
+        {% if result %}
+
+        <div class="result {% if result == 'SPAM' %}spam{% else %}genuine{% endif %}">
+
+            <div class="result-title">
+                {{ result }}
+            </div>
+
+            {% if confidence %}
+            <div class="confidence">
+                Confidence: {{ confidence }}%
+            </div>
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+        <a href="{{ url_for('history') }}">
+            📋 View Prediction History
+        </a>
+
+        <div class="footer">
+            AI-Based Spam Message Detection System
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
